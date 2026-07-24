@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback, useMemo } from "react";
+import { useState, useEffect, useCallback, useMemo } from "react";
 import {
   Plus,
   RotateCcw,
@@ -104,7 +104,7 @@ function saveToDatabase(key, data) {
   try {
     localStorage.setItem(key, JSON.stringify(data));
     return true;
-  } catch (e) {
+  } catch {
     return false;
   }
 }
@@ -113,7 +113,7 @@ function loadFromDatabase(key) {
   try {
     const raw = localStorage.getItem(key);
     return raw ? JSON.parse(raw) : null;
-  } catch (e) {
+  } catch {
     return null;
   }
 }
@@ -586,7 +586,7 @@ function SideMenu({ open, onClose, current, onNavigate }) {
 // navegador (no sería seguro); en su lugar llaman a un endpoint de API que
 // tú apuntas a tu backend, el cual sí conversa con la base de datos real.
 // ---------------------------------------------------------------------------
-function BackendConnectedPage({ title, description, placeholderUrl }) {
+function BackendConnectedPage({ description, placeholderUrl }) {
   const [endpoint, setEndpoint] = useState("");
   const [loading, setLoading] = useState(false);
   const [result, setResult] = useState(null);
@@ -1005,7 +1005,7 @@ function useStockStorage() {
         setFaltantes(parsed.faltantes || {});
         setCantidades(parsed.cantidades || {});
       }
-    } catch (e) {
+    } catch {
       // No existe aún o está corrupto: se queda con los valores por defecto
     } finally {
       setSaveHint("Guardado automático");
@@ -1018,7 +1018,7 @@ function useStockStorage() {
     try {
       localStorage.setItem(STORAGE_KEY, JSON.stringify({ items, faltantes, cantidades }));
       setSaveHint("Guardado automático");
-    } catch (e) {
+    } catch {
       setSaveHint("No se pudo guardar (espacio lleno o navegador bloqueó el guardado)");
     }
   }, [items, faltantes, cantidades, loaded]);
